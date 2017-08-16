@@ -3,10 +3,8 @@
 "                           VIM SETTING
 "------------------------------------------------------------------------- 
 syntax on
-set t_Co=256
-set background=dark
+"set background=dark
 set laststatus=2
-set showcmd                         "show command
 set backspace=indent,eol,start      "設定backspace工作方式
 set tabstop=4                       "設定tab寬度
 set shiftwidth=4                    "設定自動對齊空格數
@@ -36,16 +34,15 @@ set termencoding=utf-8
 set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1
 set enc=utf-8
 
-highlight Search ctermfg=7 ctermbg=4
-highlight Comment ctermfg=darkcyan
+"highlight Search ctermfg=7 ctermbg=4
+"highlight Comment ctermfg=darkcyan
 
-colorscheme desert
 
 "------------------------------------------------------------------------- 
 "                           VUNDLE SETTING
 "------------------------------------------------------------------------- 
 
-set nocompatible              " be iMproved, required
+"set nocompatible              " be iMproved, required
 filetype off                  " required
 
 " set the runtime path to include Vundle and initialize
@@ -67,12 +64,16 @@ Plugin 'scrooloose/nerdtree'
 "surround.vim: quoting/parenthesizing made simple
 Plugin 'tpope/vim-surround'
 
-"precision colorscheme for the vim text editor 
-Plugin 'altercation/vim-colors-solarized'
-
 "lean & mean status/tabline for vim that's light as air 
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
+
+"precision color scheme for multiple applications (terminal, vim, etc.) with both dark/light modes
+Plugin 'altercation/vim-colors-solarized'
+
+"Simple tmux statusline generator with support for powerline symbols and
+"vim/airline/lightline statusline integration
+Plugin 'edkolev/tmuxline.vim'
 
 "A code-completion engine for Vim
 Plugin 'valloric/youcompleteme'
@@ -169,22 +170,88 @@ let g:indentLine_bgcolor_gui = '#FF5F00'
 "------------------------------------------------------------------------- 
 "                           SOLARIZED SETTING
 "------------------------------------------------------------------------- 
+"need to add below line in bashrc
+"export TERM=xterm-256color
 syntax enable
-"set background=dark
-"set t_Co=16
-"let g:solarized_termcolors=256
-let g:airline_solarized_bg='dark'
+set background=dark
+set t_Co=256
+"default solarized color is 16
+"reset to 256 to enable more color
+let g:solarized_termcolors=256
+"let g:solarized_contrast=high
+"let g:solarized_visibility=high
+"let g:airline_solarized_bg='dark'
 "call togglebg#map("<F5>")
 colorscheme solarized
+
+
+"------------------------------------------------------------------------- 
+"                           TMUXLINE SETTING
+"------------------------------------------------------------------------- 
+
+let g:tmuxline_powerline_separators = 0
+":Tmuxline vim_statusline_1
+" or
+":Tmuxline vim_statusline_2
+" or
+":Tmuxline vim_statusline_3
+
+"let g:airline#extensions#tmuxline#enabled = 0
 
 "------------------------------------------------------------------------- 
 "                           AIRLINE SETTING
 "------------------------------------------------------------------------- 
+" Install powerline-fonts Step
+" mkdir .font/
+" cd .font/
+" git clone https://github.com/Lokaltog/powerline-fonts.git
+" cd powerline-fonts
+" ./install.sh
 
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#left_sep = ' '
-let g:airline#extensions#tabline#left_alt_sep = '|'
+" use solarized dark theme
+let g:airline_solarized_bg='dark'
+
+" Enable powerline fonts
 let g:airline_powerline_fonts = 1
+if !exists('g:airline_symbols')
+let g:airline_symbols = {}
+endif
+
+" Powerline symbols: unicode
+let g:airline_left_sep = '»'
+let g:airline_left_sep = '▶'
+let g:airline_right_sep = '«'
+let g:airline_right_sep = '◀'
+let g:airline_symbols.linenr = '␊'
+let g:airline_symbols.linenr = '␤'
+let g:airline_symbols.linenr = '¶'
+let g:airline_symbols.branch = '⎇'
+let g:airline_symbols.paste = 'ρ'
+let g:airline_symbols.paste = 'Þ'
+let g:airline_symbols.paste = '∥'
+let g:airline_symbols.whitespace = 'Ξ'
+
+" Powerline symbols: powerline fonts
+let g:airline_left_sep = ''
+let g:airline_left_alt_sep = ''
+let g:airline_right_sep = ''
+let g:airline_right_alt_sep = ''
+let g:airline_symbols.branch = ''
+let g:airline_symbols.readonly = ''
+let g:airline_symbols.linenr = ''
+
+
+" enable tabline
+let g:airline#extensions#tabline#enabled = 1
+" set left separator
+let g:airline#extensions#tabline#left_sep = ' '
+" set left separator which are not editting
+let g:airline#extensions#tabline#left_alt_sep = '|'
+" show buffer number
+let g:airline#extensions#tabline#buffer_nr_show = 1
+
+"let g:airline_section_b = '%{strftime("%c")}'
+"let g:airline_section_y = 'BN: %{bufnr("%")}'
 
 "------------------------------------------------------------------------- 
 "                           MAP SETTING
